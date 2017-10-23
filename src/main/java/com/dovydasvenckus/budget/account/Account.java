@@ -3,7 +3,6 @@ package com.dovydasvenckus.budget.account;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -23,13 +22,15 @@ public class Account {
 
     @Enumerated(STRING)
     @Column(name = "type", nullable = false)
-    private AccountType accountType;
+    private AccountType type;
 
-    @ManyToOne
-    private Account parent;
+    Account(String name, AccountType type) {
+        this.name = name;
+        this.type = type;
+    }
 
-    @OneToMany(mappedBy = "parent")
-    private Collection<Account> subAccounts;
+    Account() {
+    }
 
     public Long getId() {
         return id;
@@ -47,27 +48,11 @@ public class Account {
         this.name = name;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
+    public AccountType getType() {
+        return type;
     }
 
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public Account getParent() {
-        return parent;
-    }
-
-    public void setParent(Account parent) {
-        this.parent = parent;
-    }
-
-    public Collection<Account> getSubAccounts() {
-        return subAccounts;
-    }
-
-    public void setSubAccounts(Collection<Account> subAccounts) {
-        this.subAccounts = subAccounts;
+    public void setType(AccountType type) {
+        this.type = type;
     }
 }
