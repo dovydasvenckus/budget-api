@@ -17,6 +17,10 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    public AccountDto getAccount(Long id) {
+        return new AccountDto(accountRepository.findOne(id));
+    }
+
     public List<AccountDto> getAccounts() {
         return accountRepository
                 .findAll()

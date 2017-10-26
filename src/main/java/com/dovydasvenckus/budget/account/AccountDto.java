@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 
 public class AccountDto {
 
+    private Long id;
+
     @NotBlank
     private String name;
 
@@ -16,6 +18,7 @@ public class AccountDto {
     }
 
     AccountDto(Account account) {
+        this.id = account.getId();
         this.name = account.getName();
         this.type = account.getType();
     }
@@ -23,6 +26,14 @@ public class AccountDto {
     public AccountDto(String name, AccountType type) {
         this.name = name;
         this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
