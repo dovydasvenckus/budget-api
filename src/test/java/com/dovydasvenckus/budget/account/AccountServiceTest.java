@@ -28,9 +28,9 @@ public class AccountServiceTest {
     public void shouldCreateAccount() {
         AccountDto accountToCreate = new AccountDto("My assets", ASSET);
 
-        accountService.createAccount(accountToCreate);
+        AccountDto createdAccount = accountService.createAccount(accountToCreate);
 
-        Account account = accountRepository.findOne(1L);
+        Account account = accountRepository.findOne(createdAccount.getId());
 
         assertThat(account.getName(), is("My assets"));
         assertThat(account.getType(), is(ASSET));
