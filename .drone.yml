@@ -6,6 +6,7 @@ pipeline:
     commands:
       - ./gradlew build
 
-  gitter:
-    image: plugins/gitter
-    webhook: https://webhooks.gitter.im/e/c02743ba74b87b185ce8
+  telegram:
+      image: appleboy/drone-telegram
+      token: ${TELEGRAM_API_TOKEN}
+      to: ${TELEGRAM_NOTIFICATION_USER}
