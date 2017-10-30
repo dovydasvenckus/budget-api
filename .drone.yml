@@ -4,9 +4,8 @@ pipeline:
     environment:
           - GRADLE_USER_HOME=~/.gradle
     commands:
-      - ./gradlew build
+      - ./gradlew $gradle_command
 
   telegram:
       image: appleboy/drone-telegram
-      token: ${TELEGRAM_API_TOKEN}
-      to: ${TELEGRAM_NOTIFICATION_USER}
+      secrets: [ telegram_token, telegram_to]
