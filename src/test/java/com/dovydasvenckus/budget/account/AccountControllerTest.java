@@ -54,10 +54,7 @@ public class AccountControllerTest {
                 .contentType(APPLICATION_JSON_UTF8)
                 .content("{ \"name\": \"Income\", \"type\": \"INCOME\" }"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", "/api/accounts/1"))
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.name").value("Income"))
-                .andExpect(jsonPath("$.type").value("INCOME"));
+                .andExpect(header().string("Location", "/api/accounts/1"));
     }
 
     @Test

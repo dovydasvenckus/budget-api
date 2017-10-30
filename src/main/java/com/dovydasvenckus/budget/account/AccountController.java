@@ -46,6 +46,6 @@ public class AccountController {
         responseHeaders.setContentType(APPLICATION_JSON_UTF8);
         responseHeaders.add("Location", request.getContextPath() + "/api/accounts/" + createdAccount.getId());
 
-        return new ResponseEntity<>(createdAccount, responseHeaders, CREATED);
+        return new ResponseEntity<>(responseHeaders, CREATED);
     }
 }
