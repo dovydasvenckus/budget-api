@@ -5,3 +5,7 @@ pipeline:
           - GRADLE_USER_HOME=~/.gradle
     commands:
       - ./gradlew build
+
+    gitter:
+        image: plugins/gitter
+        webhook: https://webhooks.gitter.im/e/c02743ba74b87b185ce8
