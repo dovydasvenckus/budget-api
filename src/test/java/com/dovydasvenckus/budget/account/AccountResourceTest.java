@@ -36,6 +36,7 @@ public class AccountResourceTest {
     public void shouldReturnNoAccounts() {
         ResponseEntity<AccountDto[]> accounts = restTemplate.getForEntity("/api/accounts", AccountDto[].class);
 
+        assertThat(accounts.getStatusCode(), is(HttpStatus.OK));
         assertThat(accounts.getBody().length, is(0));
     }
 
