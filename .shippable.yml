@@ -14,7 +14,7 @@ build:
         - ./gradlew test
         - ./gradlew jacocoTestReport
         - pwd $HOME
-        - ls -la $HOME/.android
+        - ls -la $HOME/.android/cache
 
     post_ci:
         - ./copy-test-results.sh
