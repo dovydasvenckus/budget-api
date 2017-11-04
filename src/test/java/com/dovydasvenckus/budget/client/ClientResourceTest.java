@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +24,7 @@ public class ClientResourceTest {
     public void shouldReturnEmptyListWhenThereIsNoClients() {
         ResponseEntity<Client[]> accounts = restTemplate.getForEntity("/api/clients", Client[].class);
 
-        assertThat(accounts.getStatusCode(), is(200));
+        assertThat(accounts.getStatusCode(), is(HttpStatus.OK));
         assertThat(accounts.getBody().length, is(0));
     }
 }
