@@ -7,8 +7,6 @@ build:
     ci:
          - ./gradlew build
          - ./gradlew jacocoTestReport
-
-    post_ci:
          - cp build/test-results/test/*.xml shippable/testresults
          - mkdir -p shippable/codecoverage/target/site/jacoco
          - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage/target/site/jacoco/jacoco.xml
