@@ -13,8 +13,6 @@ build:
         - ./gradlew assemble
         - ./gradlew test
         - ./gradlew jacocoTestReport
-        - pwd $HOME
-        - ls -la $HOME/.android/cache
 
     post_ci:
         - ./copy-test-results.sh
