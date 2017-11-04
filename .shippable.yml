@@ -6,14 +6,15 @@ jdk:
 build:
     cache: true
     cache_dir_list:
-        - /root/.m2
+        - $HOME/.gradle/caches
+        - $HOME/.gradle/wrapper
 
     ci:
         - ./gradlew assemble
         - ./gradlew test
         - ./gradlew jacocoTestReport
-        - ls -la $HOME/.gradle
-        - ls -la /root/.gradle
+        - pwd $HOME
+        - ls -la $HOME/.android
 
     post_ci:
         - ./copy-test-results.sh
