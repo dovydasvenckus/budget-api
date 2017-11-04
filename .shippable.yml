@@ -6,9 +6,11 @@ jdk:
 build:
     cache: true
     cache_dir_list:
-        - $HOME/.m2
+        - /root/.m2
 
     ci:
+        - ls -$HOME
+        - ls -la /root/
         - ./gradlew build
         - ./gradlew jacocoTestReport
 
