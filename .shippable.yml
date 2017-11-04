@@ -10,5 +10,6 @@ build:
 
     post_ci:
          - cp build/test-results/test/*.xml shippable/testresults
-         - mkdir -p shippable/codecoverage/target/site/
-         - cp -r build/reports/jacoco shippable/codecoverage/target/site/
+         - mkdir -p shippable/codecoverage/target/site/jacoco
+         - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage/target/site/jacoco/jacoco.xml
+         - cp -r build/reports/jacoco/test/html shippable/codecoverage/target/site/jacoco/
