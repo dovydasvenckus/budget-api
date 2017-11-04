@@ -9,7 +9,7 @@ build:
         - /root/.m2
 
     ci:
-        - ls -$HOME
+        - ls -la $HOME
         - ls -la /root/
         - ./gradlew build
         - ./gradlew jacocoTestReport
