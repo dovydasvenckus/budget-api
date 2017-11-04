@@ -1,6 +1,5 @@
 package com.dovydasvenckus.budget.client;
 
-import com.dovydasvenckus.budget.account.AccountDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class AccountResourceTest {
+public class ClientResourceTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -24,6 +23,7 @@ public class AccountResourceTest {
     public void shouldReturnEmptyListWhenThereIsNoClients() {
         ResponseEntity<Client[]> accounts = restTemplate.getForEntity("/api/clients", Client[].class);
 
+        assertThat(accounts.getStatusCode(), is(200));
         assertThat(accounts.getBody().length, is(0));
     }
 }
