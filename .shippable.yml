@@ -6,3 +6,9 @@ jdk:
 build:
     ci:
          - ./gradlew build
+
+    post_ci:
+         - ls
+         - pwd
+         - ls ..
+         - cp build/test-results/test/*.xml shippable/testresults
