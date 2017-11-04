@@ -4,6 +4,10 @@ jdk:
      - openjdk8
 
 build:
+    cache: true
+    cache_dir_list:
+        - $HOME/.m2
+
     ci:
         - ./gradlew build
         - ./gradlew jacocoTestReport
