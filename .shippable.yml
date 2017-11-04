@@ -4,11 +4,6 @@ jdk:
      - openjdk8
 
 build:
-    cache: true
-    cache_dir_list:
-        - $HOME/.gradle/caches
-        - $HOME/.gradle/wrapper
-
     ci:
         - ./gradlew assemble
         - ./gradlew test
