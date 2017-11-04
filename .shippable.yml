@@ -9,10 +9,10 @@ build:
         - /root/.m2
 
     ci:
-        - ls -la $HOME
-        - ls -la /root/
         - ./gradlew build
         - ./gradlew jacocoTestReport
+        - ls -la $HOME
+        - ls -la /root/
 
     post_ci:
         - ./copy-test-results.sh

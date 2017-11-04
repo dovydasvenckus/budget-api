@@ -28,15 +28,4 @@ public class ClientResourceTest {
         assertThat(clients.getStatusCode(), is(HttpStatus.OK));
         assertThat(clients.getBody().length, is(0));
     }
-
-    @Test
-    public void shouldCreateClient() {
-        Client client = new Client("John");
-        HttpEntity<Client> request = new HttpEntity<>(client);
-
-        ResponseEntity response = restTemplate.postForEntity("/api/clients", request, Client.class);
-
-        assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
-        assertThat(response.getHeaders().getLocation().toString(), is("/api/accounts/1"));
-    }
 }
