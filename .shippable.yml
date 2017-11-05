@@ -17,3 +17,11 @@ build:
         - ./gradlew jacocoTestReport
         - ./copy-test-results.sh
         - ./copy-coverage.sh
+
+integrations:
+    notifications:
+        - integrationName: telegram-notification
+        type: webhook
+        payload:
+            - MY_MESSAGE=Successfully triggered web hook
+        on_success: always
