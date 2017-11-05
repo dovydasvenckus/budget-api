@@ -20,7 +20,7 @@ build:
 
 integrations:
     notifications:
-        integrationName: telegram-notification
+      - integrationName: telegram-notification
         type: webhook
         payload:
             - MY_MESSAGE=Successfully triggered web hook
