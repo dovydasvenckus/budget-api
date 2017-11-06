@@ -33,12 +33,12 @@ public class AccountController {
         return accountService.getAccounts();
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = GET)
     public AccountDto getAccount(@PathVariable("id") Long accountId) {
         return accountService.getAccount(accountId);
     }
 
-    @RequestMapping(method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = POST)
     public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto account, WebRequest request) {
         AccountDto createdAccount = accountService.createAccount(account);
 
