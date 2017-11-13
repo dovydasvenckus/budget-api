@@ -6,6 +6,8 @@ jdk:
 build:
     ci:
         - ./gradlew assemble
+        - ./gradlew checkstyleMain
+        - ./gradlew checkstyleTest
         - ./gradlew test
         - ./gradlew jacocoTestReport
 
