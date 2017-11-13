@@ -43,11 +43,11 @@ public class AccountControllerTest {
 
     @Test
     public void shouldCreateNewAccount() throws Exception {
-        AccountDto accountDto = new AccountDto("Income", INCOME);
-        AccountDto accountDtoWithId = new AccountDto("Income", INCOME);
-        accountDtoWithId.setId(1L);
+        AccountDTO accountDTO = new AccountDTO("Income", INCOME);
+        AccountDTO accountDTOWithId = new AccountDTO("Income", INCOME);
+        accountDTOWithId.setId(1L);
 
-        when(accountService.createAccount(refEq(accountDto))).thenReturn(accountDtoWithId);
+        when(accountService.createAccount(refEq(accountDTO))).thenReturn(accountDTOWithId);
 
         mockMvc.perform(post("/api/accounts")
                 .accept(APPLICATION_JSON_UTF8)
@@ -59,7 +59,7 @@ public class AccountControllerTest {
 
     @Test
     public void shouldReturnAccountWhenAccountExists() throws Exception {
-        AccountDto existingAccount = new AccountDto("Expenses", EXPENSE);
+        AccountDTO existingAccount = new AccountDTO("Expenses", EXPENSE);
         existingAccount.setId(12L);
 
         when(accountService.getAccount(12L)).thenReturn(existingAccount);
@@ -85,7 +85,7 @@ public class AccountControllerTest {
 
     @Test
     public void shouldReturnAccountWhenPresent() throws Exception {
-        AccountDto existingAccount = new AccountDto("Assets", ASSET);
+        AccountDTO existingAccount = new AccountDTO("Assets", ASSET);
         existingAccount.setId(12L);
         when(accountService.getAccounts()).thenReturn(Arrays.asList(existingAccount));
 

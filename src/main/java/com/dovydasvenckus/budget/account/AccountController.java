@@ -1,24 +1,22 @@
 package com.dovydasvenckus.budget.account;
 
+import com.dovydasvenckus.budget.util.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.Valid;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping(ACCOUNT_RESOURCE)
 public class AccountController {
 
     private AccountService accountService;
@@ -29,23 +27,19 @@ public class AccountController {
     }
 
     @RequestMapping(method = GET)
-    public List<AccountDto> getAccounts() {
+    public List<AccountDTO> getAccounts() {
         return accountService.getAccounts();
     }
 
     @RequestMapping(value = "/{id}", method = GET)
-    public AccountDto getAccount(@PathVariable("id") Long accountId) {
+    public AccountDTO getAccount(@PathVariable("id") Long accountId) {
         return accountService.getAccount(accountId);
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto account, WebRequest request) {
-        AccountDto createdAccount = accountService.createAccount(account);
+    public ResponseEntity<Void> createAccount(@Valid @RequestBody AccountDTO account) {
+        AccountDTO createdAccount = accountService.createAccount(account);
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(APPLICATION_JSON_UTF8);
-        responseHeaders.add("Location", request.getContextPath() + "/api/accounts/" + createdAccount.getId());
-
-        return new ResponseEntity<>(responseHeaders, CREATED);
+        return ResponseBuilder.created(ACCOUNT_RESOURCE, createdAccount.getId());
     }
 }

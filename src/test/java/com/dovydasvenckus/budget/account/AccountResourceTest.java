@@ -34,7 +34,7 @@ public class AccountResourceTest {
 
     @Test
     public void shouldReturnNoAccounts() {
-        ResponseEntity<AccountDto[]> accounts = restTemplate.getForEntity("/api/accounts", AccountDto[].class);
+        ResponseEntity<AccountDTO[]> accounts = restTemplate.getForEntity("/api/accounts", AccountDTO[].class);
 
         assertThat(accounts.getStatusCode(), is(HttpStatus.OK));
         assertThat(accounts.getBody().length, is(0));
@@ -42,12 +42,22 @@ public class AccountResourceTest {
 
     @Test
     public void shouldCreateAccount() {
-        AccountDto accountDto = new AccountDto("Assets", ASSET);
-        HttpEntity<AccountDto> request = new HttpEntity<>(accountDto);
+        AccountDTO accountDTO = new AccountDTO("Assets", ASSET);
+        HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO);
 
-        ResponseEntity<AccountDto> response = restTemplate.postForEntity("/api/accounts", request, AccountDto.class);
+        ResponseEntity<AccountDTO> response = restTemplate.postForEntity("/api/accounts/", request, AccountDTO.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
         assertThat(response.getHeaders().getLocation().toString(), is("/api/accounts/1"));
+    }
+
+    @Test
+    public void shouldNotCreateAccountWithEmptyName() {
+        AccountDTO accountDTO = new AccountDTO("", ASSET);
+        HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO);
+
+        ResponseEntity<AccountDTO> response = restTemplate.postForEntity("/api/accounts", request, AccountDTO.class);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
     }
 }

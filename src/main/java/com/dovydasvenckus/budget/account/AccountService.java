@@ -1,7 +1,9 @@
 package com.dovydasvenckus.budget.account;
 
+import com.dovydasvenckus.budget.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,23 +19,38 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AccountDto getAccount(Long id) {
-        return new AccountDto(accountRepository.findOne(id));
+    public AccountDTO getAccount(Long id) {
+        return new AccountDTO(accountRepository.findOne(id));
     }
 
-    public List<AccountDto> getAccounts() {
+    public List<AccountDTO> getAccounts() {
         return accountRepository
                 .findAll()
                 .stream()
-                .map(AccountDto::new)
+                .map(AccountDTO::new)
                 .collect(toList());
     }
 
-    public AccountDto createAccount(AccountDto accountDto) {
-        Account account = new Account();
-        account.setName(accountDto.getName());
-        account.setType(accountDto.getType());
+    @Transactional
+    public AccountDTO createAccount(AccountDTO accountDTO) {
+        Account account = new Account(accountDTO);
+        return new AccountDTO(accountRepository.save(account));
+    }
 
-        return new AccountDto(accountRepository.save(account));
+    @Transactional
+    public AccountDTO createAccount(Client client, AccountDTO accountDTO) {
+        Account account = new Account(accountDTO);
+
+        account.setClient(client);
+        Account createdAccount = accountRepository.save(account);
+
+        client.addAccount(createdAccount);
+
+        return new AccountDTO(createdAccount);
+    }
+
+    @Transactional
+    public void deleteAllAccounts(String username) {
+        accountRepository.deleteAllByClientUsername(username);
     }
 }

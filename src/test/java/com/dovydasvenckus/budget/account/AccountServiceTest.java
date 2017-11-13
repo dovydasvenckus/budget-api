@@ -26,9 +26,9 @@ public class AccountServiceTest {
 
     @Test
     public void shouldCreateAccount() {
-        AccountDto accountToCreate = new AccountDto("My assets", ASSET);
+        AccountDTO accountToCreate = new AccountDTO("My assets", ASSET);
 
-        AccountDto createdAccount = accountService.createAccount(accountToCreate);
+        AccountDTO createdAccount = accountService.createAccount(accountToCreate);
 
         Account account = accountRepository.findOne(createdAccount.getId());
 
@@ -42,7 +42,7 @@ public class AccountServiceTest {
         createAccount("Income", INCOME);
         createAccount("Expense", EXPENSE);
 
-        List<AccountDto> accounts = accountService.getAccounts();
+        List<AccountDTO> accounts = accountService.getAccounts();
 
         assertThat(accounts.size(), is(2));
         assertAccountNameAndType(accounts.get(0), "Income", INCOME);
@@ -53,7 +53,7 @@ public class AccountServiceTest {
         accountRepository.save(new Account(name, accountType));
     }
 
-    private void assertAccountNameAndType(AccountDto account, String name, AccountType type) {
+    private void assertAccountNameAndType(AccountDTO account, String name, AccountType type) {
         assertThat(account.getName(), is(name));
         assertThat(account.getType(), is(type));
     }

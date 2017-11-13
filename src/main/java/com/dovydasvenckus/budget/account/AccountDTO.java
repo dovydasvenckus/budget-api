@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 
-public class AccountDto {
+public class AccountDTO {
 
     private Long id;
 
@@ -14,16 +14,16 @@ public class AccountDto {
     @NotNull
     private AccountType type;
 
-    AccountDto() {
+    AccountDTO() {
     }
 
-    AccountDto(Account account) {
+    public AccountDTO(Account account) {
         this.id = account.getId();
         this.name = account.getName();
         this.type = account.getType();
     }
 
-    public AccountDto(String name, AccountType type) {
+    public AccountDTO(String name, AccountType type) {
         this.name = name;
         this.type = type;
     }

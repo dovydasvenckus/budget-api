@@ -1,5 +1,6 @@
 package com.dovydasvenckus.budget.account;
 
+import com.dovydasvenckus.budget.client.Client;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -24,9 +25,17 @@ public class Account {
     @Column(name = "type", nullable = false)
     private AccountType type;
 
+    @ManyToOne
+    private Client client;
+
     Account(String name, AccountType type) {
         this.name = name;
         this.type = type;
+    }
+
+    Account(AccountDTO accountDTO) {
+        this.name = accountDTO.getName();
+        this.type = accountDTO.getType();
     }
 
     Account() {
@@ -54,5 +63,13 @@ public class Account {
 
     public void setType(AccountType type) {
         this.type = type;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
