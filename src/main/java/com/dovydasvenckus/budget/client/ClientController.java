@@ -13,8 +13,6 @@ import java.util.Optional;
 
 import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(CLIENT_RESOURCE)
