@@ -5,10 +5,7 @@ import com.dovydasvenckus.budget.account.AccountService;
 import com.dovydasvenckus.budget.util.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -33,26 +30,26 @@ public class ClientController {
         this.accountService = accountService;
     }
 
-    @RequestMapping(method = GET)
+    @GetMapping
     public ResponseEntity<Collection<ClientDTO>> getClients() {
         return ResponseEntity.ok().body(clientService.getAllClients());
     }
 
-    @RequestMapping("/{clientId}")
+    @GetMapping("/{clientId}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable long clientId) {
         return clientService.getClientById(clientId)
                 .map(clientDTO -> ResponseEntity.ok().body(clientDTO))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @RequestMapping(method = POST)
+    @PostMapping
     public ResponseEntity createClient(@Valid @RequestBody ClientDTO clientToCreate) {
         Client createdClient = clientService.createClient(clientToCreate);
 
         return ResponseBuilder.created(CLIENT_RESOURCE, createdClient.getId());
     }
 
-    @RequestMapping(value = "/{username}/accounts", method = GET)
+    @GetMapping(value = "/{username}/accounts")
     public ResponseEntity<Collection<AccountDTO>> createAccountForClient(@PathVariable String username) {
         Optional<Client> foundClient = clientService.getClientByUsername(username);
 
@@ -61,7 +58,7 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @RequestMapping(value = "/{username}/accounts", method = POST)
+    @PostMapping(value = "/{username}/accounts")
     public ResponseEntity<Void> createAccountForClient(@PathVariable String username,
                                                        @Valid @RequestBody AccountDTO accountDTO) {
         Optional<Client> client = clientService.getClientByUsername(username);
