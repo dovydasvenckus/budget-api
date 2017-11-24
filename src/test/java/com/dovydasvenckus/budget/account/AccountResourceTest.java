@@ -31,7 +31,6 @@ public class AccountResourceTest {
         accountRepository.deleteAll();
     }
 
-
     @Test
     public void shouldReturnNoAccounts() {
         ResponseEntity<AccountDTO[]> accounts = restTemplate.getForEntity("/api/accounts", AccountDTO[].class);

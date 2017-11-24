@@ -4,8 +4,8 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 import static com.dovydasvenckus.budget.account.AccountType.*
-import static com.dovydasvenckus.budget.account.OperationType.CREDIT
-import static com.dovydasvenckus.budget.account.OperationType.DEBIT
+import static com.dovydasvenckus.budget.operation.OperationType.CREDIT
+import static com.dovydasvenckus.budget.operation.OperationType.DEBIT
 
 class AccountTypeSpec extends Specification {
 

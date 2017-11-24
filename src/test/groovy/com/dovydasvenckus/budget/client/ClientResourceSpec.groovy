@@ -54,12 +54,12 @@ class ClientResourceSpec extends Specification {
             john.register()
 
         when:
-            john.openAccount("Kebabai", EXPENSE)
+            john.openAccount("Rent", EXPENSE)
 
         then:
             with(john.getLastAccount()) {
                 id != null
-                name == 'Kebabai'
+                name == 'Rent'
                 type == EXPENSE
             }
     }
@@ -70,17 +70,17 @@ class ClientResourceSpec extends Specification {
 
         when:
             john.openAccount("Salary", INCOME)
-            john.openAccount("Kebabai", EXPENSE)
+            john.openAccount("Rent", EXPENSE)
 
         then:
             List<AccountDTO> accounts = john.getAccounts()
 
             verifyAccount(accounts[0], "Salary", INCOME)
-            verifyAccount(accounts[1], "Kebabai", EXPENSE)
+            verifyAccount(accounts[1], "Rent", EXPENSE)
 
     }
 
-    private void verifyAccount(AccountDTO accountDto, String name, AccountType type) {
+    private static void verifyAccount(AccountDTO accountDto, String name, AccountType type) {
         assert accountDto.id != null
         assert accountDto.name == name
         assert accountDto.type == type

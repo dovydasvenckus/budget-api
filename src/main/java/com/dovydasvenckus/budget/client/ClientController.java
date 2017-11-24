@@ -40,13 +40,6 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity createClient(@Valid @RequestBody ClientDTO clientToCreate) {
-        Client createdClient = clientService.createClient(clientToCreate);
-
-        return ResponseBuilder.created(CLIENT_RESOURCE, createdClient.getId());
-    }
-
     @GetMapping(value = "/{username}/accounts")
     public ResponseEntity<Collection<AccountDTO>> createAccountForClient(@PathVariable String username) {
         Optional<Client> foundClient = clientService.getClientByUsername(username);
@@ -54,6 +47,13 @@ public class ClientController {
         return foundClient
                 .map(client -> ResponseEntity.ok(clientService.transformClientAccounts(client)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity createClient(@Valid @RequestBody ClientDTO clientToCreate) {
+        Client createdClient = clientService.createClient(clientToCreate);
+
+        return ResponseBuilder.created(CLIENT_RESOURCE, createdClient.getId());
     }
 
     @PostMapping(value = "/{username}/accounts")
