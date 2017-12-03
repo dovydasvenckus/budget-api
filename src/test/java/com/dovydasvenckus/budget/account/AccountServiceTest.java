@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.dovydasvenckus.budget.account.AccountType.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,8 +31,8 @@ public class AccountServiceTest {
 
         Account account = accountRepository.findOne(createdAccount.getId());
 
-        assertThat(account.getName(), is("My assets"));
-        assertThat(account.getType(), is(ASSET));
+        assertThat(account.getName()).isEqualTo(("My assets"));
+        assertThat(account.getType()).isEqualTo(ASSET);
     }
 
 
@@ -44,7 +43,7 @@ public class AccountServiceTest {
 
         List<AccountDTO> accounts = accountService.getAccounts();
 
-        assertThat(accounts.size(), is(2));
+        assertThat(accounts.size()).isEqualTo(2);
         assertAccountNameAndType(accounts.get(0), "Income", INCOME);
         assertAccountNameAndType(accounts.get(1), "Expense", EXPENSE);
     }
@@ -54,7 +53,7 @@ public class AccountServiceTest {
     }
 
     private void assertAccountNameAndType(AccountDTO account, String name, AccountType type) {
-        assertThat(account.getName(), is(name));
-        assertThat(account.getType(), is(type));
+        assertThat(account.getName()).isEqualTo(name);
+        assertThat(account.getType()).isEqualTo(type);
     }
 }
