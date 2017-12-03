@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,8 +20,12 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AccountDTO getAccount(Long id) {
+    public AccountDTO getAccountDTO(Long id) {
         return new AccountDTO(accountRepository.findOne(id));
+    }
+
+    public Optional<Account> getAccount(Long id) {
+        return accountRepository.findById(id);
     }
 
     public List<AccountDTO> getAccounts() {
@@ -47,6 +52,12 @@ public class AccountService {
         client.addAccount(createdAccount);
 
         return new AccountDTO(createdAccount);
+    }
+
+    @Transactional
+    public void updateAccount(Account account, AccountDTO updatedAccount) {
+        account.setName(updatedAccount.getName());
+        account.setType(updatedAccount.getType());
     }
 
     @Transactional

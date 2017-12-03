@@ -62,7 +62,7 @@ public class AccountControllerTest {
         AccountDTO existingAccount = new AccountDTO("Expenses", EXPENSE);
         existingAccount.setId(12L);
 
-        when(accountService.getAccount(12L)).thenReturn(existingAccount);
+        when(accountService.getAccountDTO(12L)).thenReturn(existingAccount);
 
         mockMvc.perform(get("/api/accounts/12"))
                 .andExpect(status().isOk())

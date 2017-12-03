@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URI;
+
 import static com.dovydasvenckus.budget.account.AccountType.ASSET;
+import static com.dovydasvenckus.budget.account.AccountType.EXPENSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.*;
@@ -40,10 +44,7 @@ public class AccountResourceTest {
 
     @Test
     public void shouldCreateAccount() {
-        AccountDTO accountDTO = new AccountDTO("Assets", ASSET);
-        HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO);
-
-        ResponseEntity<AccountDTO> response = restTemplate.postForEntity("/api/accounts/", request, AccountDTO.class);
+        ResponseEntity<AccountDTO> response = createAccount("Assets", ASSET);
 
         assertThat(response.getStatusCode()).isEqualTo(CREATED);
         assertThat(response.getHeaders().getLocation().toString()).isEqualTo("/api/accounts/1");
@@ -51,11 +52,40 @@ public class AccountResourceTest {
 
     @Test
     public void shouldNotCreateAccountWithEmptyName() {
-        AccountDTO accountDTO = new AccountDTO("", ASSET);
-        HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO);
-
-        ResponseEntity<AccountDTO> response = restTemplate.postForEntity("/api/accounts", request, AccountDTO.class);
+        ResponseEntity<AccountDTO> response = createAccount("", ASSET);
 
         assertThat(response.getStatusCode()).isEqualTo(BAD_REQUEST);
+    }
+
+    @Test
+    public void shouldUpdateAccountNameAndType() {
+        ResponseEntity<AccountDTO> createAccountResponse = createAccount("Assets", ASSET);
+
+        URI createdAccountUri = createAccountResponse.getHeaders().getLocation();
+
+        AccountDTO accountDTO = new AccountDTO("Rent", EXPENSE);
+
+        restTemplate.exchange(createdAccountUri, HttpMethod.PUT, new HttpEntity<>(accountDTO), Void.class);
+
+        AccountDTO updatedAccount = restTemplate.getForEntity(createdAccountUri, AccountDTO.class).getBody();
+
+        assertThat(updatedAccount.getName()).isEqualTo("Rent");
+        assertThat(updatedAccount.getType()).isEqualTo(EXPENSE);
+    }
+
+    @Test
+    public void shouldReturn404WhenUpdatingAccountIsNotFound() {
+        AccountDTO accountDTO = new AccountDTO("Rent", EXPENSE);
+
+        ResponseEntity<Void> updateResponse = restTemplate.exchange("/api/accounts/9999", HttpMethod.PUT, new HttpEntity<>(accountDTO), Void.class);
+
+        assertThat(updateResponse.getStatusCode()).isEqualTo(NOT_FOUND);
+    }
+
+    private ResponseEntity<AccountDTO> createAccount(String name, AccountType type) {
+        AccountDTO accountDTO = new AccountDTO(name, type);
+        HttpEntity<AccountDTO> request = new HttpEntity<>(accountDTO);
+
+        return restTemplate.postForEntity("/api/accounts/", request, AccountDTO.class);
     }
 }

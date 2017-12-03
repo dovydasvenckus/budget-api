@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 
@@ -28,7 +29,7 @@ public class AccountController {
 
     @GetMapping(value = "/{id}")
     public AccountDTO getAccount(@PathVariable("id") Long accountId) {
-        return accountService.getAccount(accountId);
+        return accountService.getAccountDTO(accountId);
     }
 
     @PostMapping
@@ -36,5 +37,17 @@ public class AccountController {
         AccountDTO createdAccount = accountService.createAccount(account);
 
         return ResponseBuilder.created(ACCOUNT_RESOURCE, createdAccount.getId());
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long accountId, @Valid @RequestBody AccountDTO updatedAccount) {
+        Optional<Account> currentAccount = accountService.getAccount(accountId);
+
+        if (currentAccount.isPresent()) {
+            accountService.updateAccount(currentAccount.get(), updatedAccount);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }
