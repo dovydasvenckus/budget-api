@@ -1,6 +1,5 @@
 package com.dovydasvenckus.budget.integration;
 
-import com.dovydasvenckus.budget.ResourceMapping;
 import com.dovydasvenckus.budget.account.AccountDTO;
 import com.dovydasvenckus.budget.account.AccountService;
 import com.dovydasvenckus.budget.account.AccountType;
