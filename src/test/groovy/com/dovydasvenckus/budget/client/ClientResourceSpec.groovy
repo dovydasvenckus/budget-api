@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
 
+import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE
 import static com.dovydasvenckus.budget.account.AccountType.EXPENSE
 import static com.dovydasvenckus.budget.account.AccountType.INCOME
 
@@ -28,7 +29,7 @@ class ClientResourceSpec extends Specification {
 
         then:
             response.statusCode == HttpStatus.CREATED
-            response.headers.getLocation().path.startsWith('/api/clients/')
+            response.headers.getLocation().path.startsWith(CLIENT_RESOURCE)
     }
 
     def 'should be able to retrieve registered user'() {

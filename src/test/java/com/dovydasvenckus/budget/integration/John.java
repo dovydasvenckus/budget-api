@@ -1,5 +1,6 @@
 package com.dovydasvenckus.budget.integration;
 
+import com.dovydasvenckus.budget.ResourceMapping;
 import com.dovydasvenckus.budget.account.AccountDTO;
 import com.dovydasvenckus.budget.account.AccountService;
 import com.dovydasvenckus.budget.account.AccountType;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 
+import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -39,7 +41,7 @@ public class John {
 
 
     public ResponseEntity<Void> register() {
-        return restTemplate.postForEntity("/api/clients/", new ClientDTO(username, firstName, lastName), Void.class);
+        return restTemplate.postForEntity(CLIENT_RESOURCE, new ClientDTO(username, firstName, lastName), Void.class);
     }
 
     public ResponseEntity<ClientDTO> getClientInfo(URI uri) {
@@ -48,7 +50,7 @@ public class John {
 
     public ResponseEntity<Void> openAccount(String accountName, AccountType accountType) {
         return restTemplate.postForEntity(
-                "/api/clients/" + username + "/accounts",
+                CLIENT_RESOURCE + "/" + username + "/accounts",
                 new AccountDTO(accountName, accountType),
                 Void.class);
     }
@@ -64,7 +66,7 @@ public class John {
 
     public Collection<AccountDTO> getAccounts() {
         return Arrays.asList(restTemplate.getForObject(
-                "/api/clients/" + username + "/accounts",
+                CLIENT_RESOURCE + "/" + username + "/accounts",
                 AccountDTO[].class)
         );
     }
