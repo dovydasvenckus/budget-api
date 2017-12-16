@@ -12,13 +12,13 @@ build:
         - ./gradlew jacocoTestReport
 
     post_ci:
-        - ./copy-test-results.sh
-        - ./copy-coverage.sh
+        - ./ci/copy-test-results.sh
+        - ./ci/copy-coverage.sh
 
     on_failure:
         - ./gradlew jacocoTestReport
-        - ./copy-test-results.sh
-        - ./copy-coverage.sh
+        - ./ci/copy-test-results.sh
+        - ./ci/copy-coverage.sh
 
 integrations:
     notifications:
