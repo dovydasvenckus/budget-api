@@ -40,7 +40,8 @@ public class AccountController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long accountId, @Valid @RequestBody AccountDTO updatedAccount) {
+    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long accountId,
+                                              @Valid @RequestBody AccountDTO updatedAccount) {
         Optional<Account> currentAccount = accountService.getAccount(accountId);
 
         if (currentAccount.isPresent()) {
