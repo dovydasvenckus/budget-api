@@ -77,7 +77,11 @@ public class AccountResourceTest {
     public void shouldReturn404WhenUpdatingAccountIsNotFound() {
         AccountDTO accountDTO = new AccountDTO("Rent", EXPENSE);
 
-        ResponseEntity<Void> updateResponse = restTemplate.exchange("/api/accounts/9999", HttpMethod.PUT, new HttpEntity<>(accountDTO), Void.class);
+        ResponseEntity<Void> updateResponse = restTemplate.exchange("/api/accounts/9999",
+                HttpMethod.PUT,
+                new HttpEntity<>(accountDTO),
+                Void.class
+        );
 
         assertThat(updateResponse.getStatusCode()).isEqualTo(NOT_FOUND);
     }
