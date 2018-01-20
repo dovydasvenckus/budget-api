@@ -19,10 +19,6 @@ public enum AccountType {
     }
 
     public OperationType getDecreaseOperation() {
-        if (increaseOperation == DEBIT) {
-            return CREDIT;
-        }
-
-        return DEBIT;
+        return (increaseOperation == DEBIT) ? CREDIT : DEBIT;
     }
 }

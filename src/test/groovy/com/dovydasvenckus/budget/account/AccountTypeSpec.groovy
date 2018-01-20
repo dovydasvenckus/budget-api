@@ -10,7 +10,7 @@ import static com.dovydasvenckus.budget.operation.OperationType.DEBIT
 class AccountTypeSpec extends Specification {
 
     @Unroll
-    def '#type should increase when #increaseOperation'() {
+    def '#type should increase after #increaseOperation operation'() {
         expect:
             type.getIncreaseOperation() == increaseOperation
         where:
@@ -23,7 +23,7 @@ class AccountTypeSpec extends Specification {
     }
 
     @Unroll
-    def '#type should decrease when #decreaseOperation'() {
+    def '#type should decrease after #decreaseOperation operation'() {
         expect:
             type.getDecreaseOperation() == decreaseOperation
         where:
