@@ -8,6 +8,10 @@ buildscript {
     }
 }
 
+ext {
+    cucumberVersion = '2.4.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'application'
@@ -44,6 +48,8 @@ dependencies {
 
     runtime('com.h2database:h2')
 
+    testCompile "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testCompile "io.cucumber:cucumber-java:${cucumberVersion}"
     testCompile 'org.assertj:assertj-core:3.8.0'
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
