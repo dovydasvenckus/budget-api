@@ -1,0 +1,13 @@
+Feature: Register client
+  In order to use system
+  As a client
+  I want to register
+
+Scenario: Client registers
+  When I register with valid personal data
+  Then I should have empty list of accounts
+
+Scenario: Client registers and creates account
+  Given I register with valid personal data
+  When I create "Savings" account
+  Then Account "Savings" should exist
