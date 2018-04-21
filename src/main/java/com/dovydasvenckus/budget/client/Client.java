@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table(name = "client")
 public class Client {
 
     @Id
@@ -23,9 +24,11 @@ public class Client {
     private String username;
 
     @NotBlank
+    @Column(name = "first_name")
     private String firstName;
 
     @NotBlank
+    @Column(name = "last_name")
     private String lastName;
 
     @OneToMany(mappedBy = "client")
