@@ -7,7 +7,15 @@ Scenario: Client registers
   When I register with valid personal data
   Then I should have empty list of accounts
 
-Scenario: Client registers and creates account
+Scenario Outline: Client registers and creates account
   Given I register with valid personal data
-  When I create "Savings" account
-  Then Account "Savings" should exist
+  When I create "Savings" account of type "<accountType>"
+  Then Account "Savings" should exist with "<accountType>" type
+
+  Examples:
+  | accountType |
+  | ASSET       |
+  | LIABILITY   |
+  | INCOME      |
+  | EXPENSE     |
+  | EQUITY      |

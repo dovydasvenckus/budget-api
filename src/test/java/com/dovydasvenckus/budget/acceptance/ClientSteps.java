@@ -35,9 +35,9 @@ public class ClientSteps extends CucumberIntegrationTest {
         assertThat(accountsResponse.getBody().length).isEqualTo(0);
     }
 
-    @When("^I create \"([^\"]*)\" account$")
-    public void iCreateAccount(String accountName) throws UnirestException {
-        AccountDTO accountDTO = new AccountDTO(accountName, AccountType.ASSET);
+    @When("^I create \"([^\"]*)\" account of type \"([^\"]*)\"$")
+    public void iCreateAccountOfType(String accountName, String accountType) throws UnirestException {
+        AccountDTO accountDTO = new AccountDTO(accountName, AccountType.valueOf(accountType));
 
         HttpResponse response = Unirest.post(getApiAddress() + getAccountsResourceAddress())
                 .header("Content-type", "application/json")
@@ -46,11 +46,11 @@ public class ClientSteps extends CucumberIntegrationTest {
                 .asJson();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED_201);
-        assertThat(response.getHeaders().get("Location")).startsWith("/api/accounts/1");
+        assertThat(response.getHeaders().get("Location").get(0)).matches("/api/accounts/\\d");
     }
 
-    @Then("^Account \"([^\"]*)\" should exist$")
-    public void accountShouldExist(String accountName) throws UnirestException {
+    @Then("^Account \"([^\"]*)\" should exist with \"([^\"]*)\" type$")
+    public void accountShouldExistWithType(String accountName, String accountType) throws UnirestException {
         HttpResponse<AccountDTO[]> accountsResponse = Unirest.get(getApiAddress() + getAccountsResourceAddress())
                 .asObject(AccountDTO[].class);
 
@@ -58,7 +58,7 @@ public class ClientSteps extends CucumberIntegrationTest {
         assertThat(accountsResponse.getBody().length).isEqualTo(1);
 
         assertThat(accountsResponse.getBody()[0].getName()).isEqualTo(accountName);
-        assertThat(accountsResponse.getBody()[0].getType()).isEqualTo(AccountType.ASSET);
+        assertThat(accountsResponse.getBody()[0].getType()).isEqualTo(AccountType.valueOf(accountType));
         assertThat(accountsResponse.getBody()[0].getId()).isNotNull();
     }
 
