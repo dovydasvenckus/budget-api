@@ -19,3 +19,9 @@ Scenario Outline: Client registers and creates account
   | INCOME      |
   | EXPENSE     |
   | EQUITY      |
+
+
+Scenario: Register client should not be able to create account with non existing type
+  Given I register with valid personal data
+  When I create account with non existing type
+  Then I should have empty list of accounts

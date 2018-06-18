@@ -37,7 +37,7 @@ public class ClientSteps extends CucumberIntegrationTest {
 
     @When("^I create \"([^\"]*)\" account of type \"([^\"]*)\"$")
     public void iCreateAccountOfType(String accountName, String accountType) throws UnirestException {
-        AccountDTO accountDTO = new AccountDTO(accountName, AccountType.valueOf(accountType));
+        CreateAccountRequest accountDTO = new CreateAccountRequest(accountName, accountType);
 
         HttpResponse response = Unirest.post(getApiAddress() + getAccountsResourceAddress())
                 .header("Content-type", "application/json")
@@ -47,6 +47,19 @@ public class ClientSteps extends CucumberIntegrationTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED_201);
         assertThat(response.getHeaders().get("Location").get(0)).matches("/api/accounts/\\d");
+    }
+
+    @When("^I create account with non existing type$")
+    public void iCreateAccountWithNonExistingType() throws UnirestException {
+        CreateAccountRequest accountDTO = new CreateAccountRequest("Savings", "NON_EXISTING");
+
+        HttpResponse response = Unirest.post(getApiAddress() + getAccountsResourceAddress())
+                .header("Content-type", "application/json")
+                .header("accept", "application/json")
+                .body(accountDTO)
+                .asJson();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST_400);
     }
 
     @Then("^Account \"([^\"]*)\" should exist with \"([^\"]*)\" type$")
