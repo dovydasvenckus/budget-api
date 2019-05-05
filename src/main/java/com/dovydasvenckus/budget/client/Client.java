@@ -1,9 +1,9 @@
 package com.dovydasvenckus.budget.client;
 
 import com.dovydasvenckus.budget.account.Account;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import java.util.Collection;
 import java.util.LinkedList;

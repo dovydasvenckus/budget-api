@@ -13,6 +13,7 @@ class AccountTypeSpec extends Specification {
     def '#type should increase after #increaseOperation operation'() {
         expect:
             type.getIncreaseOperation() == increaseOperation
+
         where:
             type      || increaseOperation
             ASSET     || DEBIT
@@ -26,6 +27,7 @@ class AccountTypeSpec extends Specification {
     def '#type should decrease after #decreaseOperation operation'() {
         expect:
             type.getDecreaseOperation() == decreaseOperation
+
         where:
             type      || decreaseOperation
             ASSET     || CREDIT

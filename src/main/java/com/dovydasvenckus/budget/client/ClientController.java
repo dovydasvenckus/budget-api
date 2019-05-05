@@ -16,11 +16,11 @@ import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
 
 @RestController
 @RequestMapping(CLIENT_RESOURCE)
-public class ClientController {
+class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @Autowired
     public ClientController(ClientService clientService, AccountService accountService) {

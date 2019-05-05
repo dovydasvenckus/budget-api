@@ -1,7 +1,6 @@
 package com.dovydasvenckus.budget.account;
 
-import org.hibernate.validator.constraints.NotBlank;
-
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class AccountDTO {

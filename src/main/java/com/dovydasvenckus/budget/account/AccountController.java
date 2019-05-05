@@ -13,9 +13,9 @@ import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 
 @RestController
 @RequestMapping(ACCOUNT_RESOURCE)
-public class AccountController {
+class AccountController {
 
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @Autowired
     public AccountController(AccountService accountService) {

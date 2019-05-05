@@ -1,9 +1,9 @@
 package com.dovydasvenckus.budget.account;
 
 import com.dovydasvenckus.budget.client.Client;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
