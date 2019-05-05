@@ -10,9 +10,6 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: "jacoco"
 apply plugin: 'checkstyle'
 
-ext {
-    cucumberVersion = '2.4.0'
-}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -37,10 +34,6 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 
     runtime('com.h2database:h2')
-
-    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
-    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
-    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
 
     testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
     testImplementation 'org.assertj:assertj-core:3.8.0'
