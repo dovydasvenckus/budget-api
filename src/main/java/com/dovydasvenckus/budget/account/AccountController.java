@@ -28,8 +28,10 @@ public class AccountController {
     }
 
     @GetMapping(value = "/{id}")
-    public AccountDTO getAccount(@PathVariable("id") Long accountId) {
-        return accountService.getAccountDTO(accountId);
+    public ResponseEntity<AccountDTO> getAccount(@PathVariable("id") Long accountId) {
+        Optional<AccountDTO> foundAccount = accountService.getAccountDTO(accountId);
+
+        return ResponseEntity.of(foundAccount);
     }
 
     @PostMapping

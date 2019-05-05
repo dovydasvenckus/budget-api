@@ -20,8 +20,9 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AccountDTO getAccountDTO(Long id) {
-        return new AccountDTO(accountRepository.findOne(id));
+    public Optional<AccountDTO> getAccountDTO(Long id) {
+        return accountRepository.findById(id)
+                .map(AccountDTO::new);
     }
 
     public Optional<Account> getAccount(Long id) {

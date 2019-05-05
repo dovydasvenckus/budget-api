@@ -1,34 +1,26 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
-    }
-}
-
-ext {
-    cucumberVersion = '2.4.0'
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
 }
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'application'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: "jacoco"
 apply plugin: 'checkstyle'
 
+ext {
+    cucumberVersion = '2.4.0'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 mainClassName = 'com.dovydasvenckus.budget.BudgetApplication'
 
-jar {
-    baseName = 'budget-api'
-    version =  '0.0.1'
-}
+group = 'com.dovydasvenckus'
+version = '0.0.1'
 
 
 repositories {
@@ -36,28 +28,28 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web') {
+    implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }
 
-    compile('org.springframework.boot:spring-boot-starter-jetty')
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-jetty')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 
     runtime('com.h2database:h2')
 
-    testCompile "io.cucumber:cucumber-junit:${cucumberVersion}"
-    testCompile "io.cucumber:cucumber-java:${cucumberVersion}"
-    testCompile "io.cucumber:cucumber-spring:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
 
-    testCompile 'com.mashape.unirest:unirest-java:1.4.9'
-    testCompile 'org.assertj:assertj-core:3.8.0'
-    testCompile 'org.apache.commons:commons-lang3:3.7'
+    testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
+    testImplementation 'org.assertj:assertj-core:3.8.0'
+    testImplementation 'org.apache.commons:commons-lang3:3.7'
 
-    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
-    testCompile('org.codehaus.groovy:groovy-all:2.4.12')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
+    testImplementation 'org.spockframework:spock-spring:1.3-groovy-2.5'
+    testImplementation('org.codehaus.groovy:groovy-all:2.4.12')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 jacocoTestReport {
@@ -68,5 +60,5 @@ jacocoTestReport {
 
 checkstyle {
     configFile = rootProject.file('checkstyle.xml')
-    toolVersion ="8.5"
+    toolVersion ="8.20"
 }
