@@ -29,7 +29,7 @@ public class AccountServiceTest {
 
         AccountDTO createdAccount = accountService.createAccount(accountToCreate);
 
-        Account account = accountRepository.findOne(createdAccount.getId());
+        Account account = accountRepository.findById(createdAccount.getId()).get();
 
         assertThat(account.getName()).isEqualTo(("My assets"));
         assertThat(account.getType()).isEqualTo(ASSET);

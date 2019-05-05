@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static com.dovydasvenckus.budget.account.AccountType.*;
 import static org.hamcrest.Matchers.hasSize;
@@ -62,7 +63,7 @@ public class AccountControllerTest {
         AccountDTO existingAccount = new AccountDTO("Expenses", EXPENSE);
         existingAccount.setId(12L);
 
-        when(accountService.getAccountDTO(12L)).thenReturn(existingAccount);
+        when(accountService.getAccountDTO(12L)).thenReturn(Optional.of(existingAccount));
 
         mockMvc.perform(get("/api/accounts/12"))
                 .andExpect(status().isOk())
