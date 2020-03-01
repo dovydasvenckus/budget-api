@@ -4,6 +4,10 @@ jdk:
   - openjdk11
 
 build:
+  pre_ci_boot:
+    image_name: drydock/u16javall
+    image_tag: v7.2.4
+
   ci:
     - ./gradlew assemble
     - ./gradlew checkstyleMain
