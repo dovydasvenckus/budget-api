@@ -1,20 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'groovy'
+    id 'jacoco'
+    id 'checkstyle'
 }
 
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'application'
-apply plugin: 'idea'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: "jacoco"
-apply plugin: 'checkstyle'
-
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-mainClassName = 'com.dovydasvenckus.budget.BudgetApplication'
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
 group = 'com.dovydasvenckus'
 version = '0.0.1'
