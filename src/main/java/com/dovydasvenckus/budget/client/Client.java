@@ -1,38 +1,20 @@
 package com.dovydasvenckus.budget.client;
 
-import com.dovydasvenckus.budget.account.Account;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
-import java.util.Collection;
-import java.util.LinkedList;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity
-@Table(name = "client")
 public class Client {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "client_id")
-    private Long id;
+    private UUID id;
 
     @NotBlank
-    @Column(nullable = false, name = "username", unique = true)
     private String username;
 
     @NotBlank
-    @Column(name = "first_name")
     private String firstName;
 
     @NotBlank
-    @Column(name = "last_name")
     private String lastName;
-
-    @OneToMany(mappedBy = "client")
-    private Collection<Account> accounts;
 
     public Client() {
     }
@@ -43,11 +25,11 @@ public class Client {
         this.lastName = clientDTO.getLastName();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -75,23 +57,4 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public Collection<Account> getAccounts() {
-        if (accounts == null) {
-            accounts = new LinkedList<>();
-        }
-
-        return accounts;
-    }
-
-    public void addAccount(Account account) {
-        if (accounts == null) {
-            accounts = new LinkedList<>();
-        }
-
-        accounts.add(account);
-    }
-
-    public void setAccounts(Collection<Account> accounts) {
-        this.accounts = accounts;
-    }
 }
