@@ -81,7 +81,7 @@ public class John {
     }
 
     public void cleanUp() {
-        jdbi.useHandle(handle -> deleteAllData(handle));
+        jdbi.useHandle(this::deleteAllData);
     }
 
     private void deleteAllData(Handle handle) {
@@ -94,8 +94,8 @@ public class John {
                 .bind("clientId", clientId)
                 .execute();
 
-        handle.createUpdate("DELETE FROM clients WHERE id = : clientId")
-                .bind("id", clientId)
+        handle.createUpdate("DELETE FROM clients WHERE id = :clientId")
+                .bind("clientId", clientId)
                 .execute();
     }
 }

@@ -16,7 +16,7 @@ public interface AccountRepository {
     @RegisterBeanMapper(Account.class)
     List<Account> findAll();
 
-    @SqlQuery("SELECT * FROM accounts as a "
+    @SqlQuery("SELECT a.id, a.name, a.type FROM accounts as a "
             + "INNER JOIN clients c ON c.id = a.client_id "
             + "WHERE c.username = ?")
     @RegisterBeanMapper(Account.class)
@@ -26,7 +26,7 @@ public interface AccountRepository {
     @RegisterBeanMapper(Account.class)
     Optional<Account> findById(@Bind UUID id);
 
-    @SqlUpdate("INSERT INTO accounts (id, name, type)"
-            + " VALUES (:id, :name, :type)")
+    @SqlUpdate("INSERT INTO accounts (id, name, type, client_id)"
+            + " VALUES (:id, :name, :type, :clientId)")
     void save(@BindBean Account account);
 }

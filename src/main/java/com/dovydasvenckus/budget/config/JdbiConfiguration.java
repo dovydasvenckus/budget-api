@@ -4,6 +4,7 @@ import com.dovydasvenckus.budget.account.AccountRepository;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.spi.JdbiPlugin;
+import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +20,9 @@ public class JdbiConfiguration {
     public Jdbi jdbi(DataSource dataSource, List<RowMapper<?>> rowMappers) {
         TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy(dataSource);
         Jdbi jdbi = Jdbi.create(proxy);
-        List<JdbiPlugin> plugins = List.of(new SqlObjectPlugin());
-        plugins.forEach(plugin -> jdbi.installPlugin(plugin));
-        rowMappers.forEach(rowMapper -> jdbi.registerRowMapper(rowMapper));
+        List<JdbiPlugin> plugins = List.of(new SqlObjectPlugin(), new PostgresPlugin());
+        plugins.forEach(jdbi::installPlugin);
+        rowMappers.forEach(jdbi::registerRowMapper);
 
         return jdbi;
     }

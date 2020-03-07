@@ -2,6 +2,7 @@ package com.dovydasvenckus.budget.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -34,9 +35,10 @@ public class ClientService {
                 .collect(Collectors.toList());
     }
 
-    Client createClient(ClientDTO clientDTO) {
+    @Transactional
+    public Client createClient(ClientDTO clientDTO) {
         Client client = new Client(clientDTO);
-        clientRepository.save(new Client(clientDTO));
+        clientRepository.save(client);
 
         return client;
     }
