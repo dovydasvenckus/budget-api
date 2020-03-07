@@ -12,17 +12,16 @@ public class Account {
 
     private AccountType type;
 
-    Account(String name, AccountType type) {
-        this.name = name;
-        this.type = type;
-    }
+    private UUID clientId;
 
     Account(AccountDTO accountDTO) {
+        this.id = UUID.randomUUID();
         this.name = accountDTO.getName();
         this.type = accountDTO.getType();
+        this.clientId = accountDTO.getClientId();
     }
 
-    Account() {
+    public Account() {
     }
 
     public UUID getId() {
@@ -48,4 +47,14 @@ public class Account {
     public void setType(AccountType type) {
         this.type = type;
     }
+
+
+    public UUID getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(UUID clientId) {
+        this.clientId = clientId;
+    }
+
 }

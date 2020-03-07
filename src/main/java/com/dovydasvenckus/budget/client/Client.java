@@ -19,7 +19,15 @@ public class Client {
     public Client() {
     }
 
+    public Client(UUID id, @NotBlank String username, @NotBlank String firstName, @NotBlank String lastName) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Client(ClientDTO clientDTO) {
+        this.id = UUID.randomUUID();
         this.username = clientDTO.getUsername();
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();

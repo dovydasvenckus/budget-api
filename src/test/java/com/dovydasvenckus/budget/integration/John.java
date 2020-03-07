@@ -1,10 +1,10 @@
 package com.dovydasvenckus.budget.integration;
 
 import com.dovydasvenckus.budget.account.AccountDTO;
-import com.dovydasvenckus.budget.account.AccountService;
 import com.dovydasvenckus.budget.account.AccountType;
 import com.dovydasvenckus.budget.client.ClientDTO;
-import com.dovydasvenckus.budget.client.ClientService;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +15,7 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.UUID;
 
 import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
@@ -27,10 +28,7 @@ public class John {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
-    private AccountService accountService;
+    private Jdbi jdbi;
 
     private String username = "johny3000";
 
@@ -83,7 +81,21 @@ public class John {
     }
 
     public void cleanUp() {
-        accountService.deleteAllAccounts(username);
-        clientService.deleteClient(username);
+        jdbi.useHandle(handle -> deleteAllData(handle));
+    }
+
+    private void deleteAllData(Handle handle) {
+        UUID clientId = handle.createQuery("SELECT id FROM clients WHERE username = :username")
+                .bind("username", username)
+                .mapTo(UUID.class)
+                .one();
+
+        handle.createUpdate("DELETE FROM accounts WHERE client_id = :clientId")
+                .bind("clientId", clientId)
+                .execute();
+
+        handle.createUpdate("DELETE FROM clients WHERE id = : clientId")
+                .bind("id", clientId)
+                .execute();
     }
 }

@@ -2,6 +2,7 @@
 build
 out
 embedded-db
+.data
 
 # Gradle
 .gradle

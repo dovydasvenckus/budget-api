@@ -2,10 +2,11 @@ package com.dovydasvenckus.budget.client;
 
 
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 public class ClientDTO {
 
-    private Long id;
+    private UUID id;
 
     @NotBlank
     private String username;
@@ -32,11 +33,11 @@ public class ClientDTO {
         this.lastName = client.getLastName();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

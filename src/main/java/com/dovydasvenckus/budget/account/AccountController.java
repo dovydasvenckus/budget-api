@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 
@@ -28,7 +29,7 @@ class AccountController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AccountDTO> getAccount(@PathVariable("id") Long accountId) {
+    public ResponseEntity<AccountDTO> getAccount(@PathVariable("id") UUID accountId) {
         Optional<AccountDTO> foundAccount = accountService.getAccountDTO(accountId);
 
         return ResponseEntity.of(foundAccount);
@@ -42,7 +43,7 @@ class AccountController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> updateAccount(@PathVariable("id") Long accountId,
+    public ResponseEntity<Void> updateAccount(@PathVariable("id") UUID accountId,
                                               @Valid @RequestBody AccountDTO updatedAccount) {
         Optional<Account> currentAccount = accountService.getAccount(accountId);
 

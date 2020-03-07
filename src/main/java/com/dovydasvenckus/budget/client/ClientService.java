@@ -1,12 +1,11 @@
 package com.dovydasvenckus.budget.client;
 
-import com.dovydasvenckus.budget.account.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,14 +18,14 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    Optional<ClientDTO> getClientById(long clientId) {
+    Optional<ClientDTO> getClientById(UUID clientId) {
         return clientRepository
                 .getClientById(clientId)
                 .map(ClientDTO::new);
     }
 
     public Optional<Client> getClientByUsername(String username) {
-        return clientRepository.getClientByUsername(username);
+        return clientRepository.getUser(username);
     }
 
     Collection<ClientDTO> getAllClients() {
@@ -36,18 +35,9 @@ public class ClientService {
     }
 
     Client createClient(ClientDTO clientDTO) {
-        return clientRepository.save(new Client(clientDTO));
-    }
+        Client client = new Client(clientDTO);
+        clientRepository.save(new Client(clientDTO));
 
-    @Transactional
-    public void deleteClient(String username) {
-        clientRepository.deleteByUsername(username);
+        return client;
     }
-
-    Collection<AccountDTO> transformClientAccounts(Client client) {
-        return client.getAccounts().stream()
-                .map(AccountDTO::new)
-                .collect(Collectors.toList());
-    }
-
 }
