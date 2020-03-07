@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/budget_api
+    username: budget_api
+    password: super-secret-pass

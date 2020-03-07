@@ -2,7 +2,9 @@ package com.dovydasvenckus.budget.client
 
 import com.dovydasvenckus.budget.account.AccountDTO
 import com.dovydasvenckus.budget.account.AccountType
+import com.dovydasvenckus.budget.config.TestDatabaseConfig
 import com.dovydasvenckus.budget.integration.John
+import org.jdbi.v3.core.Jdbi
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
@@ -13,7 +15,7 @@ import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE
 import static com.dovydasvenckus.budget.account.AccountType.EXPENSE
 import static com.dovydasvenckus.budget.account.AccountType.INCOME
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = TestDatabaseConfig)
 class ClientResourceSpec extends Specification {
 
     @Autowired

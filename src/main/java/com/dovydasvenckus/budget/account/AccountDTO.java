@@ -2,16 +2,19 @@ package com.dovydasvenckus.budget.account;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class AccountDTO {
 
-    private Long id;
+    private UUID id;
 
     @NotBlank
     private String name;
 
     @NotNull
     private AccountType type;
+
+    private UUID clientId;
 
     AccountDTO() {
     }
@@ -20,6 +23,7 @@ public class AccountDTO {
         this.id = account.getId();
         this.name = account.getName();
         this.type = account.getType();
+        this.clientId = account.getClientId();
     }
 
     public AccountDTO(String name, AccountType type) {
@@ -27,11 +31,11 @@ public class AccountDTO {
         this.type = type;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -49,5 +53,13 @@ public class AccountDTO {
 
     public void setType(AccountType type) {
         this.type = type;
+    }
+
+    public UUID getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(UUID clientId) {
+        this.clientId = clientId;
     }
 }

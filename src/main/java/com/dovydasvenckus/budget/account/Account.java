@@ -1,51 +1,34 @@
 package com.dovydasvenckus.budget.account;
 
-import com.dovydasvenckus.budget.client.Client;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity
-@Table(name = "account")
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "account_id")
-    private Long id;
+    private UUID id;
 
     @NotBlank
-    @Column(name = "name")
     private String name;
 
-    @Enumerated(STRING)
-    @Column(name = "type", nullable = false)
     private AccountType type;
 
-    @ManyToOne
-    private Client client;
-
-    Account(String name, AccountType type) {
-        this.name = name;
-        this.type = type;
-    }
+    private UUID clientId;
 
     Account(AccountDTO accountDTO) {
+        this.id = UUID.randomUUID();
         this.name = accountDTO.getName();
         this.type = accountDTO.getType();
+        this.clientId = accountDTO.getClientId();
     }
 
-    Account() {
+    public Account() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -65,11 +48,13 @@ public class Account {
         this.type = type;
     }
 
-    public Client getClient() {
-        return client;
+
+    public UUID getClientId() {
+        return clientId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientId(UUID clientId) {
+        this.clientId = clientId;
     }
+
 }

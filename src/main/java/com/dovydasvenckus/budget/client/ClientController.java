@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.dovydasvenckus.budget.ResourceMapping.ACCOUNT_RESOURCE;
 import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
@@ -34,7 +35,7 @@ class ClientController {
     }
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<ClientDTO> getClientById(@PathVariable long clientId) {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable UUID clientId) {
         return clientService.getClientById(clientId)
                 .map(clientDTO -> ResponseEntity.ok().body(clientDTO))
                 .orElse(ResponseEntity.notFound().build());
@@ -45,7 +46,7 @@ class ClientController {
         Optional<Client> foundClient = clientService.getClientByUsername(username);
 
         return foundClient
-                .map(client -> ResponseEntity.ok(clientService.transformClientAccounts(client)))
+                .map(client -> ResponseEntity.ok(accountService.getAccountsByUsername(client.getUsername())))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -55,7 +56,7 @@ class ClientController {
         Optional<Client> client = clientService.getClientByUsername(username);
 
         return client.map(c ->
-                createResponse(accountService.createAccount(c, accountDTO)))
+                createResponse(accountService.createAccount(c.getId(), accountDTO)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -69,4 +70,5 @@ class ClientController {
     private ResponseEntity<Void> createResponse(AccountDTO accountDTO) {
         return ResponseBuilder.created(ACCOUNT_RESOURCE, accountDTO.getId());
     }
+
 }

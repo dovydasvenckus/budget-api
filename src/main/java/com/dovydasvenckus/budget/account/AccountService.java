@@ -1,12 +1,13 @@
 package com.dovydasvenckus.budget.account;
 
-import com.dovydasvenckus.budget.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,12 +21,12 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<AccountDTO> getAccountDTO(Long id) {
+    public Optional<AccountDTO> getAccountDTO(UUID id) {
         return accountRepository.findById(id)
                 .map(AccountDTO::new);
     }
 
-    public Optional<Account> getAccount(Long id) {
+    public Optional<Account> getAccount(UUID id) {
         return accountRepository.findById(id);
     }
 
@@ -37,22 +38,28 @@ public class AccountService {
                 .collect(toList());
     }
 
-    @Transactional
-    public AccountDTO createAccount(AccountDTO accountDTO) {
-        Account account = new Account(accountDTO);
-        return new AccountDTO(accountRepository.save(account));
+    public Collection<AccountDTO> getAccountsByUsername(String username) {
+        return accountRepository.findAllByUsername(username)
+                .stream()
+                .map(AccountDTO::new)
+                .collect(toList());
     }
 
     @Transactional
-    public AccountDTO createAccount(Client client, AccountDTO accountDTO) {
+    public AccountDTO createAccount(AccountDTO accountDTO) {
+        Account account = new Account(accountDTO);
+        accountRepository.save(account);
+        return new AccountDTO(account);
+    }
+
+    @Transactional
+    public AccountDTO createAccount(UUID userId, AccountDTO accountDTO) {
         Account account = new Account(accountDTO);
 
-        account.setClient(client);
-        Account createdAccount = accountRepository.save(account);
+        account.setClientId(userId);
+        accountRepository.save(account);
 
-        client.addAccount(createdAccount);
-
-        return new AccountDTO(createdAccount);
+        return new AccountDTO(account);
     }
 
     @Transactional
@@ -61,8 +68,4 @@ public class AccountService {
         account.setType(updatedAccount.getType());
     }
 
-    @Transactional
-    public void deleteAllAccounts(String username) {
-        accountRepository.deleteAllByClientUsername(username);
-    }
 }
