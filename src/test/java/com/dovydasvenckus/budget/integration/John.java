@@ -2,7 +2,7 @@ package com.dovydasvenckus.budget.integration;
 
 import com.dovydasvenckus.budget.account.AccountDTO;
 import com.dovydasvenckus.budget.account.AccountType;
-import com.dovydasvenckus.budget.client.ClientDTO;
+import com.dovydasvenckus.budget.user.UserDTO;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.UUID;
 
-import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE;
+import static com.dovydasvenckus.budget.ResourceMapping.USER_RESOURCE;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -38,16 +38,16 @@ public class John {
 
 
     public ResponseEntity<Void> register() {
-        return restTemplate.postForEntity(CLIENT_RESOURCE, new ClientDTO(username, firstName, lastName), Void.class);
+        return restTemplate.postForEntity(USER_RESOURCE, new UserDTO(username, firstName, lastName), Void.class);
     }
 
-    public ResponseEntity<ClientDTO> getClientInfo(URI uri) {
-        return restTemplate.getForEntity(uri, ClientDTO.class);
+    public ResponseEntity<UserDTO> getUserInfo(URI uri) {
+        return restTemplate.getForEntity(uri, UserDTO.class);
     }
 
     public ResponseEntity<Void> openAccount(String accountName, AccountType accountType) {
         return restTemplate.postForEntity(
-                CLIENT_RESOURCE + "/" + username + "/accounts",
+                USER_RESOURCE + "/" + username + "/accounts",
                 new AccountDTO(accountName, accountType),
                 Void.class);
     }
@@ -63,7 +63,7 @@ public class John {
 
     public Collection<AccountDTO> getAccounts() {
         return Arrays.asList(restTemplate.getForObject(
-                CLIENT_RESOURCE + "/" + username + "/accounts",
+                USER_RESOURCE + "/" + username + "/accounts",
                 AccountDTO[].class)
         );
     }
@@ -85,17 +85,17 @@ public class John {
     }
 
     private void deleteAllData(Handle handle) {
-        UUID clientId = handle.createQuery("SELECT id FROM clients WHERE username = :username")
+        UUID userId = handle.createQuery("SELECT id FROM users WHERE username = :username")
                 .bind("username", username)
                 .mapTo(UUID.class)
                 .one();
 
-        handle.createUpdate("DELETE FROM accounts WHERE client_id = :clientId")
-                .bind("clientId", clientId)
+        handle.createUpdate("DELETE FROM accounts WHERE user_id = :userId")
+                .bind("userId", userId)
                 .execute();
 
-        handle.createUpdate("DELETE FROM clients WHERE id = :clientId")
-                .bind("clientId", clientId)
+        handle.createUpdate("DELETE FROM users WHERE id = :userId")
+                .bind("userId", userId)
                 .execute();
     }
 }

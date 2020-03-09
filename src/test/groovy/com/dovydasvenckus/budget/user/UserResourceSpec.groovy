@@ -1,22 +1,21 @@
-package com.dovydasvenckus.budget.client
+package com.dovydasvenckus.budget.user
 
 import com.dovydasvenckus.budget.account.AccountDTO
 import com.dovydasvenckus.budget.account.AccountType
 import com.dovydasvenckus.budget.config.TestDatabaseConfig
 import com.dovydasvenckus.budget.integration.John
-import org.jdbi.v3.core.Jdbi
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
 
-import static com.dovydasvenckus.budget.ResourceMapping.CLIENT_RESOURCE
+import static com.dovydasvenckus.budget.ResourceMapping.USER_RESOURCE
 import static com.dovydasvenckus.budget.account.AccountType.EXPENSE
 import static com.dovydasvenckus.budget.account.AccountType.INCOME
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = TestDatabaseConfig)
-class ClientResourceSpec extends Specification {
+class UserResourceSpec extends Specification {
 
     @Autowired
     private John john
@@ -25,26 +24,26 @@ class ClientResourceSpec extends Specification {
         john.cleanUp()
     }
 
-    def 'should register client'() {
+    def 'should register user'() {
         when:
             ResponseEntity<Void> response = john.register()
 
         then:
             response.statusCode == HttpStatus.CREATED
-            response.headers.getLocation().path.startsWith(CLIENT_RESOURCE)
+            response.headers.getLocation().path.startsWith(USER_RESOURCE)
     }
 
     def 'should be able to retrieve registered user'() {
         given:
-            URI clientURI = john.register().headers.getLocation()
+            URI userUri = john.register().headers.getLocation()
 
         when:
-            ResponseEntity<ClientDTO> clientResponse = john.getClientInfo(clientURI)
+            ResponseEntity<UserDTO> userResponse = john.getUserInfo(userUri)
 
         then:
-            clientResponse.statusCode == HttpStatus.OK
+            userResponse.statusCode == HttpStatus.OK
 
-            with(clientResponse.body) {
+            with(userResponse.body) {
                 id != null
                 username == john.username
                 firstName == john.firstName
@@ -52,7 +51,7 @@ class ClientResourceSpec extends Specification {
             }
     }
 
-    def 'client should be able to open new account'() {
+    def 'user should be able to open new account'() {
         given:
             john.register()
 
@@ -67,7 +66,7 @@ class ClientResourceSpec extends Specification {
             }
     }
 
-    def 'client should be able to open two new accounts'() {
+    def 'user should be able to open two new accounts'() {
         given:
             john.register()
 

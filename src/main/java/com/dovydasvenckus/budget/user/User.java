@@ -1,9 +1,9 @@
-package com.dovydasvenckus.budget.client;
+package com.dovydasvenckus.budget.user;
 
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-public class Client {
+public class User {
 
     private UUID id;
 
@@ -16,21 +16,21 @@ public class Client {
     @NotBlank
     private String lastName;
 
-    public Client() {
+    public User() {
     }
 
-    public Client(UUID id, @NotBlank String username, @NotBlank String firstName, @NotBlank String lastName) {
+    public User(UUID id, @NotBlank String username, @NotBlank String firstName, @NotBlank String lastName) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Client(ClientDTO clientDTO) {
+    public User(UserDTO userDTO) {
         this.id = UUID.randomUUID();
-        this.username = clientDTO.getUsername();
-        this.firstName = clientDTO.getFirstName();
-        this.lastName = clientDTO.getLastName();
+        this.username = userDTO.getUsername();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
     }
 
     public UUID getId() {

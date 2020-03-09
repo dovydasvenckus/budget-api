@@ -56,7 +56,7 @@ public class AccountService {
     public AccountDTO createAccount(UUID userId, AccountDTO accountDTO) {
         Account account = new Account(accountDTO);
 
-        account.setClientId(userId);
+        account.setUserId(userId);
         accountRepository.save(account);
 
         return new AccountDTO(account);

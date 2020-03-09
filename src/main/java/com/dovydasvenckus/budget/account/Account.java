@@ -12,13 +12,13 @@ public class Account {
 
     private AccountType type;
 
-    private UUID clientId;
+    private UUID userId;
 
     Account(AccountDTO accountDTO) {
         this.id = UUID.randomUUID();
         this.name = accountDTO.getName();
         this.type = accountDTO.getType();
-        this.clientId = accountDTO.getClientId();
+        this.userId = accountDTO.getUserId();
     }
 
     public Account() {
@@ -49,12 +49,12 @@ public class Account {
     }
 
 
-    public UUID getClientId() {
-        return clientId;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setClientId(UUID clientId) {
-        this.clientId = clientId;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
 }

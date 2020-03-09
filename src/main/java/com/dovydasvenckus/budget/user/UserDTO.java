@@ -1,10 +1,10 @@
-package com.dovydasvenckus.budget.client;
+package com.dovydasvenckus.budget.user;
 
 
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-public class ClientDTO {
+public class UserDTO {
 
     private UUID id;
 
@@ -17,20 +17,20 @@ public class ClientDTO {
     @NotBlank
     private String lastName;
 
-    public ClientDTO() {
+    public UserDTO() {
     }
 
-    public ClientDTO(String username, String firstName, String lastName) {
+    public UserDTO(String username, String firstName, String lastName) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public ClientDTO(Client client) {
-        this.id = client.getId();
-        this.username = client.getUsername();
-        this.firstName = client.getFirstName();
-        this.lastName = client.getLastName();
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
     }
 
     public UUID getId() {

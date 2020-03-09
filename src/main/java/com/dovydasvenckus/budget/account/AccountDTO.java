@@ -14,7 +14,7 @@ public class AccountDTO {
     @NotNull
     private AccountType type;
 
-    private UUID clientId;
+    private UUID userId;
 
     AccountDTO() {
     }
@@ -23,7 +23,7 @@ public class AccountDTO {
         this.id = account.getId();
         this.name = account.getName();
         this.type = account.getType();
-        this.clientId = account.getClientId();
+        this.userId = account.getUserId();
     }
 
     public AccountDTO(String name, AccountType type) {
@@ -55,11 +55,11 @@ public class AccountDTO {
         this.type = type;
     }
 
-    public UUID getClientId() {
-        return clientId;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setClientId(UUID clientId) {
-        this.clientId = clientId;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }
