@@ -46,7 +46,7 @@ dependencies {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
+        xml.enabled = true
     }
 }
 
@@ -54,3 +54,5 @@ checkstyle {
     configFile = rootProject.file('checkstyle.xml')
     toolVersion = "8.20"
 }
+
+check.dependsOn jacocoTestReport
