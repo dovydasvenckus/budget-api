@@ -1,11 +1,11 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.5.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'java'
-    id 'groovy'
-    id 'jacoco'
-    id 'checkstyle'
+    id 'org.springframework.boot' version '2.4.4'
 }
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 
 sourceCompatibility = '11'
 targetCompatibility = '11'
@@ -19,12 +19,10 @@ ext {
     jdbiVersion = '3.12.2'
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.4.4"))
     implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
 
     implementation('org.springframework.boot:spring-boot-starter-jdbc')
@@ -50,5 +48,5 @@ jacocoTestReport {
 
 checkstyle {
     configFile = rootProject.file('checkstyle.xml')
-    toolVersion ="8.20"
+    toolVersion = "8.20"
 }
