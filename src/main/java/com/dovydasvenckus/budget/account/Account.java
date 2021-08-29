@@ -48,7 +48,6 @@ public class Account {
         this.type = type;
     }
 
-
     public UUID getUserId() {
         return userId;
     }
